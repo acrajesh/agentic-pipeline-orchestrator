@@ -1,17 +1,17 @@
-# 🤖 Agentic Pipeline Orchestrator Framework
+# 🤖 Agentic Pipeline Orchestrator
 
-**Portfolio Showcase: Advanced AI Systems Architecture**
+**Intelligent Autonomous Pipeline Management Framework**
 
-This repository demonstrates expertise in designing and implementing **intelligent, autonomous systems** for enterprise pipeline orchestration. It showcases the transformation of conceptual PDF diagrams into production-ready, agentic AI frameworks that can operate autonomously in complex enterprise environments.
+This framework demonstrates advanced agentic AI concepts applied to enterprise pipeline orchestration. It transforms traditional pipeline management into an intelligent, self-healing system capable of autonomous decision-making and issue resolution.
 
-## 📋 **PDF Diagram Implementation**
+## 📋 **Core Concept**
 
-This codebase directly implements the concepts shown in our PDF diagrams:
+Based on the PDF diagrams in `docs/diagrams/`, this implementation showcases:
 
-- **[Agentic Flow.pdf](docs/diagrams/Agentic%20Flow.pdf)** - Core agentic decision-making workflow
-- **[Agentic Proposal.pdf](docs/diagrams/Agentic%20Proposal%20.pdf)** - Enterprise architecture and benefits
+- **[Agentic Flow.pdf](docs/diagrams/Agentic%20Flow.pdf)** - Intelligent decision-making workflow
+- **[Agentic Proposal.pdf](docs/diagrams/Agentic%20Proposal%20.pdf)** - Enterprise architecture approach
 
-The framework transforms these conceptual diagrams into **production-ready code** that enterprises can deploy immediately.
+The framework transforms these concepts into **production-ready code** with autonomous capabilities.
 
 ## 🎯 **What Makes This Special**
 
@@ -66,41 +66,25 @@ Issue Detected → Agent Analysis → Decision Selection → Action Execution �
 4. **📈 Learning Patterns**: Agents improve decision-making based on historical outcomes
 5. **🚨 Intelligent Escalation**: Critical issues are escalated with full context
 
-## 📁 **Key Files and Their Purpose**
+## 📁 **Repository Structure**
 
 ### **Core Framework:**
-- **`src/framework/baseline_orchestrator.py`** - Original orchest.py (unchanged baseline)
-- **`src/framework/enhanced_orchestrator.py`** - Baseline + agent integration points
 - **`src/framework/agentic_orchestrator.py`** - Full agentic framework implementation
+- **`src/framework/enhanced_orchestrator.py`** - Baseline + agent integration points  
+- **`src/framework/baseline_orchestrator.py`** - Original orchest.py reference
 
-### **Documentation:**
-- **`PDF_TO_CODE_MAPPING.md`** - Maps PDF diagram components to code
-- **`GAP_ANALYSIS.md`** - Detailed analysis of what agents fill
-- **`WALKTHROUGH.md`** - Step-by-step code walkthrough
-
-### **Demonstrations:**
+### **Demonstration:**
 - **`demo.py`** - Interactive demo of the agentic framework
-- **`examples/gap_demonstration.py`** - Shows baseline vs agentic comparison
 
-### **PDF Diagrams:**
+### **Conceptual Foundation:**
 - **`docs/diagrams/Agentic Flow.pdf`** - Core decision-making workflow
 - **`docs/diagrams/Agentic Proposal.pdf`** - Enterprise architecture concepts
 
-## 🚀 **Quick Navigation for Reviewers**
+## 🚀 **Quick Start**
 
-### **For Technical Overview:**
-1. **[SHOWCASE_OVERVIEW.md](SHOWCASE_OVERVIEW.md)** - Technical expertise highlights
-2. **[PDF_TO_CODE_MAPPING.md](PDF_TO_CODE_MAPPING.md)** - How PDF concepts become code
-3. **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Professional project organization
-
-### **For Code Review:**
-1. **[src/framework/enhanced_orchestrator.py](src/framework/enhanced_orchestrator.py)** - Main implementation
-2. **[src/framework/agentic_orchestrator.py](src/framework/agentic_orchestrator.py)** - Full agentic framework
-3. **[GAP_ANALYSIS.md](GAP_ANALYSIS.md)** - What agents provide vs baseline
-
-### **For Demonstration:**
-1. **[demo.py](demo.py)** - Interactive framework demonstration
-2. **[examples/gap_demonstration.py](examples/gap_demonstration.py)** - Baseline vs agentic comparison
+1. **Review the PDF diagrams** in `docs/diagrams/` to understand the concepts
+2. **Examine the source code** in `src/framework/` to see the implementation
+3. **Run the demo** with `python demo.py` to see it in action
 
 ### Pipeline Phases
 
