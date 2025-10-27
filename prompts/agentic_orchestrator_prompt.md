@@ -1,14 +1,243 @@
 # Agentic Pipeline Orchestrator Prompt
 
 ## System Role
-You are a **Full Agentic Pipeline Orchestrator** - an intelligent, autonomous system that combines algorithmic intelligence with Large Language Model integration for complex analysis, decision-making, and enterprise-grade pipeline management.
+You are implementing a **Full Agentic Pipeline Orchestrator** - the pinnacle of intelligent pipeline management that combines algorithmic agents with Large Language Model integration for autonomous decision-making, complex analysis, and enterprise-grade pipeline orchestration.
 
-## Core Behavior
-- Execute pipelines with complete autonomous intelligence
-- Integrate LLMs for complex issue analysis and resolution
-- Provide intelligent JIRA integration and escalation
-- Demonstrate true agentic capabilities: goal-oriented, adaptive, context-aware
-- Seamlessly blend algorithmic efficiency with cognitive augmentation
+## Detailed Program Walkthrough
+
+### **Step 1: Agentic System Initialization**
+```python
+class AgenticPipelineOrchestrator:
+    def __init__(self, project_dir):
+        # 1.1 Initialize enhanced orchestrator foundation
+        super().__init__(project_dir)
+        
+        # 1.2 LLM Integration Configuration
+        self.llm_enabled = os.getenv("AGENTIC_LLM_ENABLED", "true").lower() == "true"
+        self.llm_provider = os.getenv("AGENTIC_LLM_PROVIDER", "openai")  # openai, gemini, anthropic
+        self.jira_integration_enabled = os.getenv("AGENTIC_JIRA_ENABLED", "true").lower() == "true"
+        
+        # 1.3 Initialize LLM agents for cognitive tasks
+        self.utils_analysis_agent = UtilsAnalysisAgent(self.llm_provider, self.llm_enabled)
+        self.conversion_error_agent = ConversionErrorAgent(self.llm_provider, self.llm_enabled)
+        self.compile_error_agent = CompileErrorAgent(self.llm_provider, self.llm_enabled)
+        self.jira_integration_agent = JIRAIntegrationAgent(self.llm_provider, self.llm_enabled)
+        
+        # 1.4 Agentic intelligence tracking
+        self.llm_analysis_count = 0
+        self.jira_tickets_created = 0
+        self.autonomous_resolutions = 0
+        self.cognitive_escalations = 0
+        
+        self.logger.info("🧠 Agentic Pipeline Orchestrator initialized")
+        self.logger.info(f"   LLM Integration: {'Enabled' if self.llm_enabled else 'Disabled'}")
+        self.logger.info(f"   LLM Provider: {self.llm_provider}")
+        self.logger.info(f"   JIRA Integration: {'Enabled' if self.jira_integration_enabled else 'Disabled'}")
+```
+
+### **Step 2: Hybrid Intelligence Command Execution**
+```python
+def execute_with_agentic_intelligence(self, cmd, cwd, desc, phase):
+    # 2.1 Setup execution monitoring
+    log_file = self._setup_command_logging(cmd)
+    attempt_count = 0
+    max_attempts = 3
+    
+    while attempt_count < max_attempts:
+        attempt_count += 1
+        
+        # 2.2 Execute command with full monitoring
+        print(f"🔧 Executing: {desc} (attempt {attempt_count})")
+        exit_code = subprocess.call(f"{cmd} > \"{log_file}\" 2>&1", shell=True, cwd=cwd)
+        
+        # 2.3 SUCCESS PATH: Continue to next command
+        if exit_code == 0:
+            print(f"✅ {desc} completed successfully")
+            self._record_success(cmd, desc, attempt_count)
+            return exit_code
+        
+        # 2.4 🤖 ALGORITHMIC AGENT: Fast issue classification
+        print(f"⚠️ Command failed with exit code {exit_code}")
+        complexity = self._classify_issue_complexity(cmd, exit_code, log_file)
+        
+        issue = Issue(
+            phase=phase,
+            command=cmd,
+            exit_code=exit_code,
+            error_message=f"Command failed with exit code {exit_code}",
+            log_file=log_file,
+            complexity=complexity,
+            context={"attempt": attempt_count, "description": desc}
+        )
+        
+        # 2.5 🤖 ALGORITHMIC DECISION: Fast response for simple issues
+        if complexity == IssueComplexity.SIMPLE:
+            algorithmic_result = self._handle_with_algorithmic_agent(issue)
+            if algorithmic_result == "success":
+                self.autonomous_resolutions += 1
+                return 0
+            elif algorithmic_result == "retry":
+                continue
+        
+        # 2.6 🧠 LLM AGENT: Deep analysis for complex issues
+        elif complexity == IssueComplexity.COMPLEX:
+            llm_result = self._handle_with_llm_agents(issue)
+            if llm_result == "success":
+                self.autonomous_resolutions += 1
+                return 0
+            elif llm_result == "retry":
+                continue
+        
+        # 2.7 🚨 CRITICAL ESCALATION: Immediate attention required
+        elif complexity == IssueComplexity.CRITICAL:
+            return self._handle_critical_escalation(issue)
+    
+    # 2.8 All attempts exhausted - final LLM analysis and escalation
+    print("❌ All attempts failed - performing final LLM analysis")
+    return self._handle_with_llm_agents(issue)
+```
+
+### **Step 3: LLM Provider Integration Framework**
+```python
+def _call_llm_provider(self, prompt: str, analysis_type: str) -> Dict:
+    # 3.1 LLM provider selection and routing
+    self.llm_analysis_count += 1
+    self.logger.info(f"🧠 LLM Provider Call: {self.llm_provider} for {analysis_type}")
+    self.logger.info(f"   Prompt: {prompt[:100]}...")
+    
+    # 3.2 Route to appropriate LLM provider
+    if self.llm_provider == "openai":
+        return self._call_openai_llm(prompt, analysis_type)
+    elif self.llm_provider == "gemini":
+        return self._call_gemini_llm(prompt, analysis_type)
+    elif self.llm_provider == "anthropic":
+        return self._call_anthropic_llm(prompt, analysis_type)
+    else:
+        return self._mock_llm_response(prompt, analysis_type)
+
+def _call_openai_llm(self, prompt: str, analysis_type: str) -> Dict:
+    # 3.3 OpenAI GPT-4 integration
+    self.logger.info("🔗 OpenAI GPT-4 Integration Point")
+    
+    try:
+        # PRODUCTION INTEGRATION POINT:
+        # import openai
+        # openai.api_key = os.getenv("OPENAI_API_KEY")
+        # 
+        # response = openai.ChatCompletion.create(
+        #     model="gpt-4",
+        #     messages=[
+        #         {"role": "system", "content": self._get_system_prompt(analysis_type)},
+        #         {"role": "user", "content": prompt}
+        #     ],
+        #     temperature=0.3,
+        #     max_tokens=1000
+        # )
+        # 
+        # return {
+        #     "analysis": response.choices[0].message.content,
+        #     "confidence": 0.9,
+        #     "provider": "openai-gpt4",
+        #     "tokens_used": response.usage.total_tokens
+        # }
+        
+        # Demo response for showcase
+        return {
+            "analysis": f"OpenAI GPT-4 analysis for {analysis_type}: Detailed root cause analysis with specific recommendations",
+            "recommendations": [
+                "Increase memory allocation to 4GB",
+                "Add retry mechanism with exponential backoff",
+                "Verify network connectivity and DNS resolution"
+            ],
+            "confidence": 0.9,
+            "provider": "openai-gpt4",
+            "requires_jira": True,
+            "priority": "High"
+        }
+        
+    except Exception as e:
+        self.logger.error(f"OpenAI API Error: {e}")
+        return self._mock_llm_response(prompt, analysis_type)
+
+def _call_gemini_llm(self, prompt: str, analysis_type: str) -> Dict:
+    # 3.4 Google Gemini integration
+    self.logger.info("🔗 Google Gemini Integration Point")
+    
+    try:
+        # PRODUCTION INTEGRATION POINT:
+        # import google.generativeai as genai
+        # genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+        # 
+        # model = genai.GenerativeModel('gemini-pro')
+        # response = model.generate_content(
+        #     f"{self._get_system_prompt(analysis_type)}\n\n{prompt}"
+        # )
+        # 
+        # return {
+        #     "analysis": response.text,
+        #     "confidence": 0.85,
+        #     "provider": "google-gemini"
+        # }
+        
+        # Demo response for showcase
+        return {
+            "analysis": f"Google Gemini analysis for {analysis_type}: Comprehensive technical analysis with contextual insights",
+            "recommendations": [
+                "Update configuration parameters",
+                "Implement fallback mechanisms", 
+                "Monitor resource utilization patterns"
+            ],
+            "confidence": 0.85,
+            "provider": "google-gemini",
+            "requires_jira": True,
+            "priority": "Medium"
+        }
+        
+    except Exception as e:
+        self.logger.error(f"Gemini API Error: {e}")
+        return self._mock_llm_response(prompt, analysis_type)
+
+def _call_anthropic_llm(self, prompt: str, analysis_type: str) -> Dict:
+    # 3.5 Anthropic Claude integration
+    self.logger.info("🔗 Anthropic Claude Integration Point")
+    
+    try:
+        # PRODUCTION INTEGRATION POINT:
+        # import anthropic
+        # client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+        # 
+        # response = client.messages.create(
+        #     model="claude-3-sonnet-20240229",
+        #     max_tokens=1000,
+        #     messages=[
+        #         {"role": "user", "content": f"{self._get_system_prompt(analysis_type)}\n\n{prompt}"}
+        #     ]
+        # )
+        # 
+        # return {
+        #     "analysis": response.content[0].text,
+        #     "confidence": 0.88,
+        #     "provider": "anthropic-claude"
+        # }
+        
+        # Demo response for showcase
+        return {
+            "analysis": f"Anthropic Claude analysis for {analysis_type}: Deep reasoning with step-by-step problem solving",
+            "recommendations": [
+                "Analyze dependency chain for conflicts",
+                "Implement graceful degradation patterns",
+                "Create comprehensive error handling"
+            ],
+            "confidence": 0.88,
+            "provider": "anthropic-claude",
+            "requires_jira": True,
+            "priority": "High"
+        }
+        
+    except Exception as e:
+        self.logger.error(f"Anthropic API Error: {e}")
+        return self._mock_llm_response(prompt, analysis_type)
+```
 
 ## Operational Characteristics
 
