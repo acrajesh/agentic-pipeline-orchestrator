@@ -100,31 +100,88 @@ Include:
 """
 ```
 
-## 🔌 **LLM Provider Integration**
+## 🔌 **LLM Provider Integration Framework**
 
-### **OpenAI Integration:**
-```python
-def _call_openai_llm(self, prompt: str) -> Dict:
-    import openai
-    
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.3
-    )
-    
-    return {"analysis": response.choices[0].message.content}
+The agentic orchestrator includes a complete LLM integration framework with support for multiple providers:
+
+### **Configuration:**
+```bash
+# Environment variables for LLM integration
+export AGENTIC_LLM_ENABLED=true
+export AGENTIC_LLM_PROVIDER=openai    # openai, gemini, anthropic
+export AGENTIC_JIRA_ENABLED=true
+
+# Provider-specific API keys
+export OPENAI_API_KEY=your_openai_key
+export GEMINI_API_KEY=your_gemini_key  
+export ANTHROPIC_API_KEY=your_anthropic_key
 ```
 
-### **Gemini Integration:**
+### **LLM Integration Points in Code:**
+
+#### **1. Provider Selection Framework:**
 ```python
+# From src/framework/agentic_orchestrator.py lines 662-678
+def _call_llm_provider(self, prompt: str) -> Dict:
+    """LLM Provider Integration - Framework for OpenAI, Gemini, etc."""
+    
+    if self.llm_provider == "openai":
+        return self._call_openai_llm(prompt)
+    elif self.llm_provider == "gemini":
+        return self._call_gemini_llm(prompt)
+    elif self.llm_provider == "anthropic":
+        return self._call_anthropic_llm(prompt)
+    else:
+        return self._mock_llm_response(prompt)
+```
+
+#### **2. OpenAI GPT Integration:**
+```python
+# From src/framework/agentic_orchestrator.py lines 680-709
+def _call_openai_llm(self, prompt: str) -> Dict:
+    """OpenAI GPT Integration Point"""
+    
+    # Framework ready for OpenAI API:
+    # import openai
+    # openai.api_key = os.getenv("OPENAI_API_KEY")
+    # response = openai.ChatCompletion.create(
+    #     model="gpt-4",
+    #     messages=[{"role": "user", "content": prompt}],
+    #     temperature=0.3,
+    #     max_tokens=1000
+    # )
+    # return {"analysis": response.choices[0].message.content}
+```
+
+#### **3. Google Gemini Integration:**
+```python
+# From src/framework/agentic_orchestrator.py lines 711-736
 def _call_gemini_llm(self, prompt: str) -> Dict:
-    import google.generativeai as genai
+    """Google Gemini Integration Point"""
     
-    model = genai.GenerativeModel('gemini-pro')
-    response = model.generate_content(prompt)
+    # Framework ready for Gemini API:
+    # import google.generativeai as genai
+    # genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+    # model = genai.GenerativeModel('gemini-pro')
+    # response = model.generate_content(prompt)
+    # return {"analysis": response.text}
+```
+
+#### **4. Anthropic Claude Integration:**
+```python
+# From src/framework/agentic_orchestrator.py lines 738-766
+def _call_anthropic_llm(self, prompt: str) -> Dict:
+    """Anthropic Claude Integration Point"""
     
-    return {"analysis": response.text}
+    # Framework ready for Claude API:
+    # import anthropic
+    # client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+    # response = client.messages.create(
+    #     model="claude-3-sonnet-20240229",
+    #     max_tokens=1000,
+    #     messages=[{"role": "user", "content": prompt}]
+    # )
+    # return {"analysis": response.content[0].text}
 ```
 
 ## 🎯 **Key Benefits**

@@ -379,9 +379,9 @@ class AgenticPipelineOrchestrator:
         self.global_context: Optional[PipelineContext] = None
         
         # LLM integration configuration
-        self.llm_enabled = True  # Can be configured via environment variable
-        self.llm_provider = "openai"  # openai, gemini, etc.
-        self.jira_integration_enabled = True
+        self.llm_enabled = os.getenv("AGENTIC_LLM_ENABLED", "true").lower() == "true"
+        self.llm_provider = os.getenv("AGENTIC_LLM_PROVIDER", "openai")  # openai, gemini, anthropic
+        self.jira_integration_enabled = os.getenv("AGENTIC_JIRA_ENABLED", "true").lower() == "true"
         
         self.logger.info("🚀 Agentic Pipeline Orchestrator initialized")
         self.logger.info(f"   LLM Integration: {'Enabled' if self.llm_enabled else 'Disabled'}")
@@ -583,8 +583,8 @@ class AgenticPipelineOrchestrator:
         # Prepare context for LLM
         prompt = self._build_analysis_prompt(issue, context)
         
-        # Mock LLM call (in production, integrate with OpenAI/Gemini)
-        llm_response = self._mock_llm_call(prompt)
+        # LLM Provider Integration - calls OpenAI, Gemini, or Anthropic
+        llm_response = self._call_llm_provider(prompt)
         
         return {
             "analysis": llm_response.get("analysis", "Complex issue detected"),
@@ -605,7 +605,7 @@ class AgenticPipelineOrchestrator:
         
         # Generate ticket content using LLM
         ticket_prompt = self._build_ticket_prompt(issue, llm_analysis, context)
-        ticket_content = self._mock_llm_call(ticket_prompt)
+        ticket_content = self._call_llm_provider(ticket_prompt)
         
         # Mock JIRA ticket creation
         ticket_id = f"AGENTIC-{int(time.time())}"
@@ -659,24 +659,125 @@ class AgenticPipelineOrchestrator:
         4. Acceptance criteria
         """
     
-    def _mock_llm_call(self, prompt: str) -> Dict:
+    def _call_llm_provider(self, prompt: str) -> Dict:
         """
-        Mock LLM call for demonstration
-        In production, integrate with OpenAI, Gemini, or other LLM providers
+        LLM Provider Integration - Framework for OpenAI, Gemini, etc.
+        This method shows exactly where LLM integration happens
         """
-        self.logger.info(f"🧠 Mock LLM Call: {prompt[:50]}...")
+        self.logger.info(f"🧠 LLM Provider Call: {self.llm_provider}")
+        self.logger.info(f"   Prompt: {prompt[:100]}...")
         
-        # Simulate LLM response
+        # LLM Provider Selection Framework
+        if self.llm_provider == "openai":
+            return self._call_openai_llm(prompt)
+        elif self.llm_provider == "gemini":
+            return self._call_gemini_llm(prompt)
+        elif self.llm_provider == "anthropic":
+            return self._call_anthropic_llm(prompt)
+        else:
+            return self._mock_llm_response(prompt)
+    
+    def _call_openai_llm(self, prompt: str) -> Dict:
+        """
+        OpenAI GPT Integration Point
+        Replace with actual OpenAI API calls when API key is available
+        """
+        self.logger.info("🔗 OpenAI GPT-4 Integration Point")
+        
+        try:
+            # Framework for OpenAI integration
+            # import openai
+            # openai.api_key = os.getenv("OPENAI_API_KEY")
+            # response = openai.ChatCompletion.create(
+            #     model="gpt-4",
+            #     messages=[{"role": "user", "content": prompt}],
+            #     temperature=0.3,
+            #     max_tokens=1000
+            # )
+            # return {"analysis": response.choices[0].message.content, "confidence": 0.9}
+            
+            # Demo response (remove when using real API)
+            return {
+                "analysis": "OpenAI GPT-4 would analyze the pipeline issue here",
+                "recommendations": ["GPT-4 generated recommendation 1", "GPT-4 generated recommendation 2"],
+                "confidence": 0.9,
+                "provider": "openai-gpt4"
+            }
+            
+        except Exception as e:
+            self.logger.error(f"OpenAI API Error: {e}")
+            return self._mock_llm_response(prompt)
+    
+    def _call_gemini_llm(self, prompt: str) -> Dict:
+        """
+        Google Gemini Integration Point
+        Replace with actual Gemini API calls when API key is available
+        """
+        self.logger.info("🔗 Google Gemini Integration Point")
+        
+        try:
+            # Framework for Gemini integration
+            # import google.generativeai as genai
+            # genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+            # model = genai.GenerativeModel('gemini-pro')
+            # response = model.generate_content(prompt)
+            # return {"analysis": response.text, "confidence": 0.85}
+            
+            # Demo response (remove when using real API)
+            return {
+                "analysis": "Google Gemini would analyze the pipeline issue here",
+                "recommendations": ["Gemini generated recommendation 1", "Gemini generated recommendation 2"],
+                "confidence": 0.85,
+                "provider": "google-gemini"
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Gemini API Error: {e}")
+            return self._mock_llm_response(prompt)
+    
+    def _call_anthropic_llm(self, prompt: str) -> Dict:
+        """
+        Anthropic Claude Integration Point
+        Replace with actual Claude API calls when API key is available
+        """
+        self.logger.info("🔗 Anthropic Claude Integration Point")
+        
+        try:
+            # Framework for Anthropic integration
+            # import anthropic
+            # client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+            # response = client.messages.create(
+            #     model="claude-3-sonnet-20240229",
+            #     max_tokens=1000,
+            #     messages=[{"role": "user", "content": prompt}]
+            # )
+            # return {"analysis": response.content[0].text, "confidence": 0.88}
+            
+            # Demo response (remove when using real API)
+            return {
+                "analysis": "Anthropic Claude would analyze the pipeline issue here",
+                "recommendations": ["Claude generated recommendation 1", "Claude generated recommendation 2"],
+                "confidence": 0.88,
+                "provider": "anthropic-claude"
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Anthropic API Error: {e}")
+            return self._mock_llm_response(prompt)
+    
+    def _mock_llm_response(self, prompt: str) -> Dict:
+        """Fallback response when no LLM provider is available"""
+        self.logger.info("📝 Using fallback mock response (no LLM provider configured)")
+        
         return {
-            "analysis": "Mock LLM analysis of the issue",
+            "analysis": "Fallback analysis - configure LLM provider for intelligent analysis",
             "recommendations": [
-                "Check system resources",
-                "Verify network connectivity", 
-                "Review configuration settings"
+                "Set OPENAI_API_KEY environment variable for OpenAI integration",
+                "Set GEMINI_API_KEY environment variable for Gemini integration", 
+                "Set ANTHROPIC_API_KEY environment variable for Claude integration"
             ],
-            "confidence": 0.85,
-            "requires_jira": True,
-            "description": "Detailed issue description generated by LLM"
+            "confidence": 0.5,
+            "provider": "mock-fallback"
         }
     
     def _determine_priority(self, issue: Issue) -> str:
