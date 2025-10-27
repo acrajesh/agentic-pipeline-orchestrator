@@ -1,0 +1,91 @@
+# Agentic Pipeline Orchestrator - Showcase Repository
+# Only include essential files for portfolio demonstration
+
+# System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Logs and runtime files
+*.log
+runlogs/
+logs/
+*.pid
+*.seed
+*.pid.lock
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Original files we don't need for showcase
+orchest.py
+pipeline_orchestrator.py
+pipeline_orchestrator_llm_enhanced.py
+orchest.prompt
+querymetadata.txt
+
+# Documentation we don't need (keeping only essential showcase docs)
+docs/original_docs/
+
+# Empty directories
+tests/
+config/
+
+# Any backup or duplicate files
+*.bak
+*.backup
+*_backup.*
+*_old.*
+
+# Exclude everything in examples except gap_demonstration.py
+examples/*
+!examples/gap_demonstration.py
+
+# Keep only essential files for agentic showcase:
+# - README.md and key documentation
+# - PDF diagrams
+# - src/framework/ (agentic implementations)
+# - demo.py
+# - Essential markdown documentation
