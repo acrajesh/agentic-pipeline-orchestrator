@@ -1,19 +1,23 @@
 """
 Agentic Pipeline Orchestrator Framework
-=======================================
+======================================
 
-A production-ready, intelligent pipeline orchestration framework that implements
-the agentic flow concepts from the PDF diagrams. This framework demonstrates
-autonomous issue resolution, intelligent decision-making, and enterprise-grade
-pipeline management.
+This module implements an intelligent, autonomous pipeline orchestration system
+that can make decisions, adapt to failures, and integrate LLMs for complex analysis.
 
 Key Features:
-- Agentic issue resolution with multiple strategies
-- Phase-based pipeline execution with intelligent routing
-- Production-ready error handling and logging
-- Extensible plugin architecture
-- Real-time monitoring and metrics
-- Enterprise security and compliance features
+- Autonomous issue detection and resolution
+- Intelligent retry logic with exponential backoff
+- Context-aware decision making
+- LLM integration for complex error analysis and JIRA ticket creation
+- Multi-strategy problem resolution (retry, adapt, escalate, alternative paths)
+- Real-time monitoring and metrics collection
+
+LLM Integration Points:
+- Complex error analysis when patterns aren't recognized
+- Intelligent JIRA ticket creation with context
+- Unsupported utility analysis and recommendations
+- Human-readable reporting and summaries
 
 This code implements the concepts shown in the Agentic Flow PDF diagrams.
 
@@ -374,7 +378,14 @@ class AgenticPipelineOrchestrator:
         self.execution_history: List[PhaseResult] = []
         self.global_context: Optional[PipelineContext] = None
         
+        # LLM integration configuration
+        self.llm_enabled = True  # Can be configured via environment variable
+        self.llm_provider = "openai"  # openai, gemini, etc.
+        self.jira_integration_enabled = True
+        
         self.logger.info("🚀 Agentic Pipeline Orchestrator initialized")
+        self.logger.info(f"   LLM Integration: {'Enabled' if self.llm_enabled else 'Disabled'}")
+        self.logger.info(f"   JIRA Integration: {'Enabled' if self.jira_integration_enabled else 'Disabled'}")
     
     def execute_pipeline(self, context: PipelineContext, phases: List[PipelinePhase] = None) -> bool:
         """
@@ -558,6 +569,126 @@ class AgenticPipelineOrchestrator:
         logger.addHandler(file_handler)
         
         return logger
+    
+    def _analyze_with_llm(self, issue: Issue, context: PipelineContext) -> Dict:
+        """
+        Analyze complex issues using LLM when algorithmic patterns aren't sufficient
+        This is called from the PDF diagram decision points
+        """
+        if not self.llm_enabled:
+            return {"analysis": "LLM disabled - manual review required", "confidence": 0.0}
+        
+        self.logger.info(f"🧠 LLM Analysis: {issue.issue_type.value} in {issue.phase.value}")
+        
+        # Prepare context for LLM
+        prompt = self._build_analysis_prompt(issue, context)
+        
+        # Mock LLM call (in production, integrate with OpenAI/Gemini)
+        llm_response = self._mock_llm_call(prompt)
+        
+        return {
+            "analysis": llm_response.get("analysis", "Complex issue detected"),
+            "recommendations": llm_response.get("recommendations", []),
+            "confidence": llm_response.get("confidence", 0.8),
+            "requires_jira": llm_response.get("requires_jira", True)
+        }
+    
+    def _create_jira_ticket(self, issue: Issue, llm_analysis: Dict, context: PipelineContext) -> Dict:
+        """
+        Create JIRA ticket with LLM-generated context and recommendations
+        This implements the escalation path from PDF diagrams
+        """
+        if not self.jira_integration_enabled:
+            return {"ticket_created": False, "reason": "JIRA integration disabled"}
+        
+        self.logger.info(f"🎫 Creating JIRA ticket for {issue.phase.value} issue")
+        
+        # Generate ticket content using LLM
+        ticket_prompt = self._build_ticket_prompt(issue, llm_analysis, context)
+        ticket_content = self._mock_llm_call(ticket_prompt)
+        
+        # Mock JIRA ticket creation
+        ticket_id = f"AGENTIC-{int(time.time())}"
+        
+        ticket_data = {
+            "ticket_created": True,
+            "ticket_id": ticket_id,
+            "title": f"{issue.phase.value.title()} Issue: {issue.issue_type.value}",
+            "description": ticket_content.get("description", "Agentic orchestrator detected an issue"),
+            "priority": self._determine_priority(issue),
+            "labels": ["agentic-pipeline", issue.phase.value, issue.issue_type.value]
+        }
+        
+        self.logger.info(f"🎫 JIRA ticket created: {ticket_id}")
+        return ticket_data
+    
+    def _build_analysis_prompt(self, issue: Issue, context: PipelineContext) -> str:
+        """Build LLM prompt for issue analysis"""
+        return f"""
+        Analyze this pipeline execution issue:
+        
+        Phase: {issue.phase.value}
+        Issue Type: {issue.issue_type.value}
+        Severity: {issue.severity}
+        Message: {issue.message}
+        Context: {issue.context}
+        
+        Project: {context.project_id}
+        Application: {context.app_name}
+        
+        Provide:
+        1. Root cause analysis
+        2. Recommended resolution steps
+        3. Risk assessment
+        4. Whether manual intervention is required
+        """
+    
+    def _build_ticket_prompt(self, issue: Issue, analysis: Dict, context: PipelineContext) -> str:
+        """Build LLM prompt for JIRA ticket creation"""
+        return f"""
+        Create a detailed JIRA ticket for this pipeline issue:
+        
+        Issue: {issue.phase.value} - {issue.issue_type.value}
+        Analysis: {analysis.get('analysis', 'No analysis available')}
+        Recommendations: {analysis.get('recommendations', [])}
+        
+        Generate:
+        1. Clear, actionable title
+        2. Detailed description with context
+        3. Step-by-step resolution guide
+        4. Acceptance criteria
+        """
+    
+    def _mock_llm_call(self, prompt: str) -> Dict:
+        """
+        Mock LLM call for demonstration
+        In production, integrate with OpenAI, Gemini, or other LLM providers
+        """
+        self.logger.info(f"🧠 Mock LLM Call: {prompt[:50]}...")
+        
+        # Simulate LLM response
+        return {
+            "analysis": "Mock LLM analysis of the issue",
+            "recommendations": [
+                "Check system resources",
+                "Verify network connectivity", 
+                "Review configuration settings"
+            ],
+            "confidence": 0.85,
+            "requires_jira": True,
+            "description": "Detailed issue description generated by LLM"
+        }
+    
+    def _determine_priority(self, issue: Issue) -> str:
+        """Determine JIRA ticket priority based on issue characteristics"""
+        if issue.severity == "critical":
+            return "Critical"
+        elif issue.issue_type in [IssueType.CRITICAL, IssueType.DATA_QUALITY]:
+            return "High"
+        elif issue.severity == "high":
+            return "High"
+        else:
+            return "Medium"
 
 
 def main():

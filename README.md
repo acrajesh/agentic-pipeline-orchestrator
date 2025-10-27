@@ -13,19 +13,22 @@ Based on the PDF diagrams in `docs/diagrams/`, this implementation showcases:
 
 The framework transforms these concepts into **production-ready code** with autonomous capabilities.
 
-## 🎯 **What Makes This Special**
+## 🎯 **What Makes This Agentic**
 
-This framework takes the existing `orchest.py` baseline and **fills the gaps** with intelligent agents. The key insight:
+This framework demonstrates **Agentic Pipeline Orchestration** - an intelligent system that autonomously manages pipeline execution, analyzes issues, and takes appropriate actions including LLM integration when needed.
 
-**✅ Keep what works** - All existing orchest.py functionality is preserved
-**🤖 Add intelligence where missing** - Agents intervene only where the PDF diagrams show gaps
+### **🤖 Agentic Capabilities:**
+- 🎯 **Goal-Oriented Execution** - Pursues pipeline completion through multiple strategies
+- 🧠 **Intelligent Analysis** - Understands failure patterns and determines appropriate responses
+- 🔄 **Autonomous Recovery** - Retries, adapts parameters, and finds alternative paths
+- 📊 **Context-Aware Decisions** - Considers execution history and environment
+- 🚨 **Smart Escalation** - Integrates LLMs for complex analysis and JIRA ticket creation
 
-### **Gap-Filling Approach:**
-- 🧠 **Failure Analysis** - Agents understand WHY commands fail (not just that they failed)
-- 🔄 **Intelligent Retry** - Exponential backoff and parameter adaptation (not just hard exits)
-- 🛠️ **Alternative Paths** - Agents find workarounds when primary paths fail
-- 📈 **Learning** - Pattern recognition improves decision-making over time
-- 🚨 **Smart Escalation** - Context-rich alerts to humans when needed
+### **🔧 LLM Integration Points:**
+- 📊 **Complex Error Analysis** - When algorithmic patterns aren't sufficient
+- 📝 **Intelligent Reporting** - Generate human-readable summaries and recommendations  
+- 🎫 **Smart JIRA Integration** - Create detailed tickets with context and priority
+- 🔍 **Unsupported Utility Analysis** - Recommend alternatives and migration strategies
 
 ## 🏗️ **Framework Architecture**
 
@@ -69,15 +72,15 @@ Issue Detected → Agent Analysis → Decision Selection → Action Execution �
 ## 📁 **Repository Structure**
 
 ### **Core Framework:**
-- **`src/framework/agentic_orchestrator.py`** - Full agentic framework implementation
-- **`src/framework/enhanced_orchestrator.py`** - Baseline + agent integration points  
+- **`src/framework/agentic_orchestrator.py`** - 🏆 **Main agentic orchestrator with LLM integration**
+- **`src/framework/enhanced_orchestrator.py`** - Enhanced baseline with agent intervention points
 - **`src/framework/baseline_orchestrator.py`** - Original orchest.py reference
 
 ### **Demonstration:**
-- **`demo.py`** - Interactive demo of the agentic framework
+- **`demo.py`** - Interactive demo comparing all approaches
 
 ### **Conceptual Foundation:**
-- **`docs/diagrams/Agentic Flow.pdf`** - Core decision-making workflow
+- **`docs/diagrams/Agentic Flow.pdf`** - Core decision-making workflow (shows LLM integration points)
 - **`docs/diagrams/Agentic Proposal.pdf`** - Enterprise architecture concepts
 
 ## 🚀 **Quick Start**

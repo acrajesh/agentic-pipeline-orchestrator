@@ -1,18 +1,31 @@
 #!/usr/bin/env python3
 """
-Agentic Pipeline Orchestrator Demo
-==================================
+Interactive Demo of the Hybrid Agentic Pipeline Orchestrator Framework
+======================================================================
 
-This demo showcases the agentic framework implementing the concepts from the PDF diagrams.
-It demonstrates autonomous issue resolution, intelligent decision-making, and production-ready
-pipeline orchestration.
+This demo showcases the evolution from traditional pipeline orchestration
+to hybrid agentic intelligence, demonstrating:
 
-Run this to see the PDF diagram concepts in action!
+1. Traditional Orchestrator (baseline)
+2. Algorithmic Agentic Orchestrator  
+3. Hybrid Agentic Orchestrator (Algorithmic + LLM)
+
+Key Features Demonstrated:
+- Autonomous decision-making
+- Intelligent retry logic
+- LLM-powered complex analysis
+- Smart JIRA integration
+- Adaptive behavior
 """
 
 import sys
 import os
 from pathlib import Path
+import time
+import random
+from typing import Dict, List
+from dataclasses import dataclass
+from enum import Enum
 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent / "src"))
@@ -22,6 +35,37 @@ from framework.agentic_orchestrator import (
     PipelineContext,
     PipelinePhase
 )
+
+
+class HybridPipelinePhase(Enum):
+    UTILS_SCAN = "utils_scan"
+    EXTRACT = "extract"
+    VALIDATE = "validate"
+    CONVERT = "convert"
+    COMPILE = "compile"
+    BUILD = "build"
+
+
+class IssueType(Enum):
+    TIMEOUT = "timeout"
+    NETWORK = "network"
+    RESOURCE = "resource"
+    CONFIGURATION = "configuration"
+    CONVERSION_ERROR = "conversion_error"
+    COMPILE_ERROR = "compile_error"
+    UNSUPPORTED_UTILITY = "unsupported_utility"
+
+
+@dataclass
+class DemoResult:
+    phase: HybridPipelinePhase
+    success: bool
+    issue_type: IssueType = None
+    resolution_strategy: str = None
+    attempts: int = 1
+    execution_time: float = 0.0
+    llm_analysis_used: bool = False
+    jira_ticket_created: bool = False
 
 
 def run_demo():
