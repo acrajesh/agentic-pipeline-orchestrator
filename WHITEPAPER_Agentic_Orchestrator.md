@@ -406,7 +406,7 @@ For organizations managing complex data processing pipelines, this approach offe
 
 - **Title**: Agentic Orchestrator Whitepaper — Google ADK + GCP Baseline (Single-Agent Design)
 - **Version**: 1.0
-- **Date**: December 2024
+- **Date**: December 2025
 - **Classification**: Internal
 
 **Prepared For**: CTO / Head of AI Strategy / Modernization Leaders
