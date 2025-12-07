@@ -2,7 +2,7 @@
 
 ## Google ADK + GCP Baseline — Single-Agent Design
 
-**Version 1.0 | December 2024**
+**Version 1.0 | December 2025**
 
 ---
 
