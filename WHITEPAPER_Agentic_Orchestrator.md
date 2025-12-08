@@ -6,6 +6,22 @@
 
 ---
 
+## Contents
+
+- [1. Executive Summary](#1-executive-summary)
+- [2. Problem Landscape](#2-problem-landscape)
+- [3. Vision and Guiding Principles](#3-vision-and-guiding-principles)
+- [4. Conceptual Architecture](#4-conceptual-architecture)
+- [5. Agent Roles and Responsibilities](#5-agent-roles-and-responsibilities)
+- [6. End-to-End Flow](#6-end-to-end-flow)
+- [7. Capability Levels](#7-capability-levels)
+- [8. Implementation Roadmap](#8-implementation-roadmap)
+- [9. Business and Technical Impact](#9-business-and-technical-impact)
+- [10. Governance](#10-governance)
+- [11. Conclusion](#11-conclusion)
+
+---
+
 # 1. Executive Summary
 
 Enterprise data pipelines today run on static, deterministic logic. When failures occur, humans must intervene. This whitepaper proposes transforming an existing pipeline orchestrator into a **single Orchestrator Agent** on Google Cloud Platform using Gemini and the Agent Development Kit (ADK). The agent treats each pipeline phase as a callable tool, reasoning through a **Think → Act → Observe** loop to drive adaptive execution. This approach reduces manual intervention, improves reliability, and establishes a foundation for self-evolving automation. A phased roadmap enables incremental adoption over 8–12 months, progressing from baseline instrumentation through full agentic capability with human oversight preserved throughout.
