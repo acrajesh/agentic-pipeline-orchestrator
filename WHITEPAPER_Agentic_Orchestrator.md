@@ -8,17 +8,17 @@
 
 ## Contents
 
-- [1. Executive Summary](#1-executive-summary)
-- [2. Problem Landscape](#2-problem-landscape)
-- [3. Vision and Guiding Principles](#3-vision-and-guiding-principles)
-- [4. Conceptual Architecture](#4-conceptual-architecture)
-- [5. Agent Roles and Responsibilities](#5-agent-roles-and-responsibilities)
-- [6. End-to-End Flow](#6-end-to-end-flow)
-- [7. Capability Levels](#7-capability-levels)
-- [8. Implementation Roadmap](#8-implementation-roadmap)
-- [9. Business and Technical Impact](#9-business-and-technical-impact)
-- [10. Governance](#10-governance)
-- [11. Conclusion](#11-conclusion)
+[1. Executive Summary](#1-executive-summary)
+[2. Problem Landscape](#2-problem-landscape)
+[3. Vision and Guiding Principles](#3-vision-and-guiding-principles)
+[4. Conceptual Architecture](#4-conceptual-architecture)
+[5. Agent Roles and Responsibilities](#5-agent-roles-and-responsibilities)
+[6. End-to-End Flow](#6-end-to-end-flow)
+[7. Capability Levels](#7-capability-levels)
+[8. Implementation Roadmap](#8-implementation-roadmap)
+[9. Business and Technical Impact](#9-business-and-technical-impact)
+[10. Governance](#10-governance)
+[11. Conclusion](#11-conclusion)
 
 ---
 
