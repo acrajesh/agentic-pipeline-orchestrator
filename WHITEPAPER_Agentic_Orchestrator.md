@@ -1,6 +1,6 @@
 # Agentic Orchestrator Whitepaper
 
-## Google ADK + GCP Baseline — Single-Agent Design
+## Single-Agent Design
 
 **Version 1.1 | December 2025**
 
