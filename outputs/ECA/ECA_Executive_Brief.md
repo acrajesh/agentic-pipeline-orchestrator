@@ -254,5 +254,3 @@ As 24,000 COBOL programmers² with average age 45-55² approach retirement, capt
 12. All About AI. [AI-Driven Code Review Statistics](https://allaboutai.com/resources/ai-statistics/ai-in-software-development)
 
 ---
-
-**For detailed technical specifications, phase-gate requirements, and implementation guidance, see the Technical Implementation Guide (ECA_revised_draft.md).**
