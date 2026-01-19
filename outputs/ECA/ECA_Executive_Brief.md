@@ -1,7 +1,5 @@
 # Agentic Modernization: Transforming Legacy Systems Through Governed Decision Orchestration
 
-**Executive Brief**
-
 ---
 
 ## Executive Summary
